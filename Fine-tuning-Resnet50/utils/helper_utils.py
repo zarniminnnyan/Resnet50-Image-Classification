@@ -1,4 +1,5 @@
-import matplotlib.pyplot as plt  
+import matplotlib.pyplot as plt 
+import tempfile 
 import torch  
 import time 
 import os 
@@ -15,8 +16,8 @@ def get_model_size(model):
     size_mb: convert the model size bytes to MB
     
     """
-    with tempfile.NamedTemporaryFile( delete=False,suffix=".pt") as tempfile: 
-        tempfile_path=tempfile.name 
+    with tempfile.NamedTemporaryFile( delete=False,suffix=".pt") as tempFile: 
+        tempfile_path=tempFile.name 
         #Save model dict 
         torch.save(model.state_dict(),tempfile_path)
      #Get Resnet50 baseline size   
@@ -27,7 +28,7 @@ def get_model_size(model):
     os.remove(tempfile_path)
     return size_mb
 
-def measure_inference_time(model,input_shape=(1,3,32,32),device,warm_up_runs=10,num_runs=100):
+def measure_inference_time(model,device,input_shape=(1,3,32,32),warm_up_runs=10,num_runs=100):
     """
     Measure the inference time of baseline model and  Fine-tuned Resnet50
     

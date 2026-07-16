@@ -41,9 +41,9 @@ def build_transforms():
 
     
 class TransformedSubset(Dataset):
-    def __init__(self, dataset, indices, transform=None):
+    def __init__(self, dataset, subset_obj, transform=None):
         self.dataset = dataset
-        self.indices = indices
+        self.indices = subset_obj.indices
         self.transform = transform
 
     def __getitem__(self, idx):
@@ -108,15 +108,15 @@ def load_tv_dataset(root: str, batch_size: int, finetuned_model_inference: bool,
         train_size = int(split_size * len(full_dataset))
         val_size = len(full_dataset) - train_size
         
-        train_indices, val_indices = random_split(
-            range(len(full_dataset)),
+        train_subset, val_subset = random_split(
+            full_dataset,
             [train_size, val_size],
             generator=torch.Generator().manual_seed(seed)
         )
         
         #  Use the wrapper to cleanly isolate the augmentation pipelines
-        train_dataset = TransformedSubset(full_dataset, train_indices, transform=train_transform)
-        val_dataset = TransformedSubset(full_dataset, val_indices, transform=val_transform)
+        train_dataset = TransformedSubset(full_dataset, train_subset, transform=train_transform)
+        val_dataset = TransformedSubset(full_dataset, val_subset, transform=val_transform)
         
         # Create dataloaders for val and train
         train_loader = DataLoader( 
@@ -140,6 +140,3 @@ def load_tv_dataset(root: str, batch_size: int, finetuned_model_inference: bool,
         return train_loader, val_loader
     
    
-    
-    
-    
