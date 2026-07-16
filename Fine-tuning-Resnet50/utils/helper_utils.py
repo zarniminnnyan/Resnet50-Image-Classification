@@ -16,14 +16,15 @@ def get_model_size(model):
     size_mb: convert the model size bytes to MB
     
     """
-    with tempfile.NamedTemporaryFile( delete=False,suffix=".pt") as tempFile: 
-        tempfile_path=tempFile.name 
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".pt") as tempFile: 
+        tempfile_path = tempFile.name 
         #Save model dict 
-        torch.save(model.state_dict(),tempfile_path)
-     #Get Resnet50 baseline size   
-    model_size_bytes=os.path.getsize(tempfile_path)
+        torch.save(model.state_dict(), tempfile_path)
+    
+    #Get Resnet50 baseline size   
+    model_size_bytes = os.path.getsize(tempfile_path)
     #Get model size in Bytes to MB
-    size_mb=model_size_bytes/(1024*1024)
+    size_mb = model_size_bytes / (1024 * 1024)
     #Remove temporary file path
     os.remove(tempfile_path)
     return size_mb
@@ -38,7 +39,6 @@ def measure_inference_time(model,device,input_shape=(1,3,32,32),warm_up_runs=10,
     #Create sample input data
     sample_input=torch.rand(input_shape).to(device)
     model.eval()
-    model.to(device)
     #Run warmup for initializing  system caches and operations
     with torch.no_grad():
         for _ in range(warm_up_runs):

@@ -5,7 +5,6 @@ from data import load_tv_dataset
 from utils import get_model_size,measure_inference_time
 from configs import DEVICE,ROOT,BATCH_SIZE,SPLIT_SIZE,SEED,INFERENCE
 
-
 @torch.no_grad()
 def evaluate_baseline_model(model,eval_loader,device):
     correct = 0
