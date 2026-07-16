@@ -1,0 +1,57 @@
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.env/
+.venv/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# -------------------------
+# Machine Learning / PyTorch
+# -------------------------
+# Model checkpoints
+*.pth
+*.pt
+checkpoints/
+saved_models/
+
+# Dataset cache / large files
+data/cache/
+*.zip
+*.tar
+*.h5
+*.npy
+*.npz
+
+# -------------------------
+# Logs and outputs
+# -------------------------
+*.log
+logs/
+runs/        # TensorBoard logs
+tmp/
+temp/
+
+# -------------------------
+# OS / IDE junk
+# -------------------------
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# VSCode / PyCharm
+.vscode/
+.idea/
