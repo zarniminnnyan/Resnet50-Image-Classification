@@ -28,6 +28,7 @@ saved_models/
 
 # Dataset cache / large files
 data/cache/
+root/
 *.zip
 *.tar
 *.h5
@@ -39,9 +40,10 @@ data/cache/
 # -------------------------
 *.log
 logs/
-runs/        # TensorBoard logs
+runs/       
 tmp/
 temp/
+
 
 # -------------------------
 # OS / IDE junk
