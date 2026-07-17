@@ -58,7 +58,7 @@ class TransformedSubset(Dataset):
         return len(self.indices)
 
 
-def load_tv_dataset(root: str, batch_size: int, finetuned_model_inference: bool, split_size: float, seed: int):
+def load_tv_dataset(cifar_100_path : str, batch_size: int, finetuned_model_inference: bool, split_size: float, seed: int):
     """ 
     Load a torchvision dataset or inference images. 
     
@@ -90,8 +90,6 @@ def load_tv_dataset(root: str, batch_size: int, finetuned_model_inference: bool,
         return inference_loader
    
     else: 
-        cifar_100_path = os.path.join(root, "cifar-100-dataset")
-        
         if os.path.exists(cifar_100_path):
             download_flag=False  
         else:

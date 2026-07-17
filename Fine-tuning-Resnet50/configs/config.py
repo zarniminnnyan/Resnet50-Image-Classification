@@ -25,10 +25,10 @@ if IS_COLAB:
     from google.colab import drive
     drive.mount("/content/drive")
     ROOT = "/content/drive/MyDrive/datasets"
-    WEIGHT_PATH = "/content/drive/MyDrive/models/baseline_weights.pth"
+    WEIGHT_PATH = "/content/drive/MyDrive/models"
 else:
     ROOT = "./root"
-    WEIGHT_PATH = "./models/baseline_weights.pth"
+    WEIGHT_PATH = "./models"
 
 # Flags
 INFERENCE = False

@@ -4,7 +4,7 @@ import os
 
 
 
-def  load_resnet(device:torch.device | str,model_path:str ):
+def  load_resnet(device:torch.device | str,weight_dir:str ):
     """
     Load a pretrained ResNet-50 model.
 
@@ -14,6 +14,9 @@ def  load_resnet(device:torch.device | str,model_path:str ):
     Returns:
         nn.Module: Pretrained ResNet-50 on the specified device.
     """
+    model_path=os.path.join(weight_dir,"baseline_weight.pth")
+    
+    os.makedirs(weight_dir, exist_ok=True)
     if os.path.exists(model_path):
         model=tv.resnet50(weights=None) 
         model.load_state_dict(torch.load(model_path,map_location=device))
