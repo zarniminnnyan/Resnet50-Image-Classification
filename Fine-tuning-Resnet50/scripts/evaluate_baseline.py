@@ -5,7 +5,7 @@ import os
 from  model import  load_resnet
 from data import load_tv_dataset
 from utils import get_model_size,measure_inference_time
-from configs import DEVICE,ROOT,BATCH_SIZE,SPLIT_SIZE,SEED,INFERENCE
+from configs import DEVICE,ROOT,WEIGHT_PATH,BATCH_SIZE,SPLIT_SIZE,SEED,INFERENCE
 
 @torch.no_grad()
 def evaluate_baseline_model(model,eval_loader,device):
@@ -30,7 +30,7 @@ def main():
     else:
         train_loader,val_loader=load_tv_dataset(root=ROOT,batch_size=BATCH_SIZE,finetuned_model_inference=INFERENCE,split_size=SPLIT_SIZE,seed=SEED)
         
-    resnet50=load_resnet(DEVICE)
+    resnet50=load_resnet(DEVICE,WEIGHT_PATH)
     model_size=get_model_size(resnet50)
     inference_time=measure_inference_time(resnet50,DEVICE)
     model_accuracy=evaluate_baseline_model(resnet50,val_loader,DEVICE)

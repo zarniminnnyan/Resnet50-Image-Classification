@@ -57,7 +57,7 @@ def measure_inference_time(model,device,input_shape=(1,3,32,32),warm_up_runs=10,
         timings_size=len(timings)
         total_timings=sum(timings)
         #Calculate avg time with average formula
-        avg_time=total_timings/timings_size
+        avg_time=total_timings/timings_size*1000
         return avg_time 
     
 
