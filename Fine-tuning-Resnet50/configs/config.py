@@ -1,3 +1,4 @@
+import configs
 import torch
 import warnings
 import sys
@@ -22,13 +23,14 @@ SEED = 42
 
 # Model weights and dataset paths
 if IS_COLAB:
-    from google.colab import drive
-    drive.mount("/content/drive")
-    ROOT = "/content/drive/MyDrive/datasets"
+    ROOT = "/content/drive/MyDrive/cifar100-datasets"
     WEIGHT_PATH = "/content/drive/MyDrive/models"
 else:
-    ROOT = "./root"
+    ROOT = "/content/drive/MyDrive/cifar100-datasets"
     WEIGHT_PATH = "./models"
 
 # Flags
 INFERENCE = False
+LR=1e-3     
+NUM_EPOCHS=20
+
