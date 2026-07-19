@@ -26,9 +26,15 @@ def evaluate_baseline_model(model,eval_loader,device):
 
 def main():
     if INFERENCE:
-        inference_loader=load_tv_dataset(cifar_100_path=ROOT,batch_size=BATCH_SIZE,finetuned_model_inference=INFERENCE,split_size=SPLIT_SIZE,seed=SEED)
-    else:
-        train_loader,val_loader=load_tv_dataset(cifar_100_path=ROOT,batch_size=BATCH_SIZE,finetuned_model_inference=INFERENCE,split_size=SPLIT_SIZE,seed=SEED)
+        raise RuntimeError("Inference mode is not allowed for this file. Set INFERENCE=False to proceed.")
+       
+    train_loader,val_loader=load_tv_dataset(
+        cifar_100_path=ROOT,
+        batch_size=BATCH_SIZE,
+        finetuned_model_inference=INFERENCE,
+        split_size=SPLIT_SIZE,
+        seed=SEED
+        )
         
     resnet50=load_resnet(DEVICE,WEIGHT_PATH)
     model_size=get_model_size(resnet50)
@@ -60,12 +66,3 @@ def main():
 
 if __name__=="__main__":
     main()
-      
-
-        
-        
-        
-        
-        
-    
-    
