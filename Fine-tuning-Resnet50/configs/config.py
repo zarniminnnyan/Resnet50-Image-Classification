@@ -1,4 +1,3 @@
-import configs
 import torch
 import warnings
 import sys
@@ -21,16 +20,11 @@ BATCH_SIZE = 32
 SPLIT_SIZE = 0.8
 SEED = 42
 
-# Model weights and dataset paths
-if IS_COLAB:
-    ROOT = "/content/drive/MyDrive/cifar100-datasets"
-    WEIGHT_PATH = "/content/drive/MyDrive/models"
-else:
-    ROOT = "/content/drive/MyDrive/cifar100-datasets"
-    WEIGHT_PATH = "./models"
+ROOT = "/content/drive/MyDrive/cifar100-datasets"
+WEIGHT_PATH = "/content/drive/MyDrive//models"
 
 # Flags
 INFERENCE = False
-LR=1e-3     
+LR=1e-4  
 NUM_EPOCHS=20
 

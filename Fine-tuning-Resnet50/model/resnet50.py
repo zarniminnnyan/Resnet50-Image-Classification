@@ -28,8 +28,8 @@ def  load_resnet(device:torch.device | str,weight_dir:str,num_classes=100):
 
     #Freeze params and replace the cifar 100 classes
     for name,param in model.named_parameters():
-      param.requires_grad=False 
-      
+        param.requires_grad=False 
+        
     in_features=model.fc.in_features
     model.fc=nn.Linear(in_features=in_features,out_features=num_classes)
     model.to(device)
