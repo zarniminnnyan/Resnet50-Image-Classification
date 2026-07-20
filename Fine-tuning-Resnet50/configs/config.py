@@ -1,9 +1,6 @@
 import torch
 import warnings
-import sys
 
-# Detect if running in Colab
-IS_COLAB = "google.colab" in sys.modules
 
 # Device setup
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,3 +25,10 @@ INFERENCE = False
 LR=1e-4  
 NUM_EPOCHS=20
 
+# Hyperparameter search ranges for Optuna
+CONFIGS = {
+    "lr_configs": {"low": 1e-5, "high": 1e-1},
+    "weight_configs": {"low": 1e-6, "high": 1e-2},
+    "num_epochs_configs": {"low": 10, "high": 50},
+    "batch_configs": {"low": 32, "high": 256}
+}
