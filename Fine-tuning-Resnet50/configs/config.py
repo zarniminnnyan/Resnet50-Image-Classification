@@ -17,8 +17,8 @@ BATCH_SIZE = 32
 SPLIT_SIZE = 0.8
 SEED = 42
 
-ROOT = "/content/drive/MyDrive/cifar100-datasets"
-WEIGHT_PATH = "/content/drive/MyDrive//models"
+ROOT = "./root"
+WEIGHT_PATH = "./models"
 
 # Flags
 INFERENCE = False
