@@ -5,9 +5,11 @@ import os
 import optuna
 from optuna.integration import PyTorchLightningPruningCallback
 
+
 import torch.nn.functional as F
 import pytorch_lightning as pl
 from pytorch_lightning.callbacks import ModelCheckpoint, EarlyStopping
+from lightning.pytorch.callbacks import TQDMProgressBar
 from torchmetrics.classification import Accuracy
 from torch.optim.lr_scheduler import CosineAnnealingLR
 
@@ -87,11 +89,16 @@ class Resnet50Classifier(pl.LightningModule):
 
 def get_trainer(max_epochs, callbacks=None):
     """Helper to create trainer with consistent config."""
+    bar=TQDMProgressBar(refresh_rate=1,)
+    callback=callbacks or [] 
     return pl.Trainer(
         max_epochs=max_epochs,
         accelerator="auto",
         devices=1,
-        callbacks=callbacks or []
+        enable_progress_bar=False, 
+         precision=16,          # mixed precision
+        gradient_clip_val=1.0, #gradients clipping to prevent the exploding
+        callbacks=callback+[bar]
     )
 
 
@@ -266,4 +273,4 @@ def main(is_optuna: bool = False):
 
 
 if __name__ == "__main__":
-    main()
+    main(is_optuna=True)
