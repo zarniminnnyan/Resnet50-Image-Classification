@@ -16,7 +16,7 @@ from torch.optim.lr_scheduler import CosineAnnealingLR
 from model import load_resnet
 from data import load_tv_dataset
 from utils import get_model_size, measure_inference_time
-from configs import DEVICE, ROOT, WEIGHT_PATH, INFERENCE, LR, NUM_EPOCHS, BATCH_SIZE, SPLIT_SIZE, SEED,CONFIGS
+from configs import DEVICE, ROOT, WEIGHT_PATH, INFERENCE, LR, NUM_EPOCHS, BATCH_SIZE, SPLIT_SIZE, SEED,CONFIGS,LIGHTNING_LOGS_PATH,MODEL_CHECKPOINT_PATH
 
 def resnet_finetune_setup():
   # Load ResNet-50 and make only layer4 + fc trainable.
@@ -93,10 +93,11 @@ def get_trainer(max_epochs, callbacks=None):
     callback=callbacks or [] 
     return pl.Trainer(
         max_epochs=max_epochs,
+         default_root_dir=LIGHTNING_LOGS_PATH,
         accelerator="auto",
         devices=1,
         enable_progress_bar=False, 
-         precision=16,          # mixed precision
+         precision="16-mixed",          # mixed precision
         gradient_clip_val=1.0, #gradients clipping to prevent the exploding
         callbacks=callback+[bar]
     )
@@ -164,11 +165,11 @@ def objective(trial):
     return trainer.callback_metrics["val_acc"].item()
 
 
-def run_optimization(n_trials=20):
+def run_optimization(n_trials=10):
     """Run hyperparameter optimization."""
     study = optuna.create_study(
         direction='maximize',
-        pruner=optuna.pruners.MedianPruner(n_startup_trials=5, n_warmup_steps=10)
+        pruner=optuna.pruners.MedianPruner(n_startup_trials=3, n_warmup_steps=2)
     )
     study.optimize(objective, n_trials=n_trials)
 

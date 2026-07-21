@@ -13,12 +13,17 @@ if not torch.cuda.is_available():
     )
 
 # Dataset settings
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 SPLIT_SIZE = 0.8
 SEED = 42
 
 ROOT = "/content/drive/MyDrive/dataset/cifar-100-python"
 WEIGHT_PATH = "./models"
+
+#Model Checkpoint Dir 
+LIGHTNING_LOGS_PATH="/content/drive/MyDrive/lightning_logs" 
+MODEL_CHECKPOINT_PATH="/content/drive/MyDrive/checkpoints"
+
 # Flags
 INFERENCE = False
 LR=1e-4  
@@ -26,8 +31,8 @@ NUM_EPOCHS=20
 
 # Hyperparameter search ranges for Optuna
 CONFIGS = {
-    "lr_configs": {"low": 1e-5, "high": 1e-1},
-    "weight_configs": {"low": 1e-6, "high": 1e-2},
-    "num_epochs_configs": {"low": 10, "high": 50},
-    "batch_configs": {"low": 32, "high": 256}
+    "lr_configs": {"low": 1e-4, "high": 1e-2},
+    "weight_configs": {"low": 1e-5, "high": 1e-3},
+    "num_epochs_configs": {"low": 10, "high": 20},
+    "batch_configs": {"low": 64, "high": 128}
 }
