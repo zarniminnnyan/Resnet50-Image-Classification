@@ -38,6 +38,7 @@ def measure_inference_time(model,device,input_shape=(1,3,32,32),warm_up_runs=10,
     """
     #Create sample input data
     sample_input=torch.rand(input_shape).to(device)
+    model.to(device)
     model.eval()
     #Run warmup for initializing  system caches and operations
     with torch.no_grad():
