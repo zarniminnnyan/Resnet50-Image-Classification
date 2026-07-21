@@ -3,7 +3,7 @@ import json
 import os
 
 import optuna
-from optuna.integration import PyTorchLightningPruningCallback
+from optuna_integration.pytorch_lightning import PyTorchLightningPruningCallback
 
 
 import torch.nn.functional as F
@@ -102,7 +102,7 @@ def get_trainer(max_epochs, callbacks=None):
     )
 
 
-def get_callbacks(study=None):
+def get_callbacks(trial=None):
     """Helper to create callbacks."""
     callbacks = [
         EarlyStopping(monitor='val_acc', patience=5, mode='max'),
@@ -113,8 +113,8 @@ def get_callbacks(study=None):
             filename="finetuned-resnet50"
         )
     ]
-    if study:
-        callbacks.append(PyTorchLightningPruningCallback(study, monitor='val_acc'))
+    if trial:
+        callbacks.append(PyTorchLightningPruningCallback(trial, monitor='val_acc'))
     return callbacks
 
 
@@ -159,7 +159,7 @@ def objective(trial):
         seed=SEED
     )
 
-    trainer = get_trainer(num_epochs, get_callbacks(trial.study))
+    trainer = get_trainer(num_epochs, get_callbacks(trial))
     trainer.fit(model, train_loader, val_loader)
     return trainer.callback_metrics["val_acc"].item()
 

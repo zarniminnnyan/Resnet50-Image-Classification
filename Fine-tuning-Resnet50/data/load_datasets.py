@@ -83,7 +83,7 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             inference_datasets,
             batch_size=batch_size,
             shuffle=False,
-            num_workers=4,
+            num_workers=2,
             persistent_workers=True,
             pin_memory=True
         )
@@ -121,7 +121,7 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             train_dataset,
             batch_size=batch_size,
             shuffle=True,
-            num_workers=4,
+            num_workers=2,
             persistent_workers=True,
             pin_memory=True  
         )
@@ -130,7 +130,7 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             val_dataset,
             batch_size=batch_size,
             shuffle=False,
-            num_workers=4,
+            num_workers=2,
             persistent_workers=True,
             pin_memory=True 
         ) 
