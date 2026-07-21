@@ -16,6 +16,20 @@ from data import load_tv_dataset
 from utils import get_model_size, measure_inference_time
 from configs import DEVICE, ROOT, WEIGHT_PATH, INFERENCE, LR, NUM_EPOCHS, BATCH_SIZE, SPLIT_SIZE, SEED,CONFIGS
 
+def resnet_finetune_setup():
+  # Load ResNet-50 and make only layer4 + fc trainable.
+  # All other layers stay frozen to keep pretrained features fixed.
+  trainable_layers=["fc","layer4"]
+  model = load_resnet(DEVICE, WEIGHT_PATH)
+  for name,param in model.named_parameters():
+    if any(layer in name for layer in trainable_layers):
+      param.requires_grad=True  
+    else:
+      param.requires_grad=False 
+      
+  return model 
+
+
 
 class Resnet50Classifier(pl.LightningModule):
     """Lightning module for fine-tuning ResNet50 on CIFAR-100."""
@@ -24,10 +38,10 @@ class Resnet50Classifier(pl.LightningModule):
         super().__init__()
         self.save_hyperparameters()
         self.num_classes = num_classes
-        self.model = load_resnet(DEVICE, WEIGHT_PATH)
         self.train_acc = Accuracy(task='multiclass', num_classes=self.num_classes)
         self.val_acc = Accuracy(task='multiclass', num_classes=self.num_classes)
-
+        self.model=resnet_finetune_setup()
+        self.trainable_params=[p for p in self.model.parameters() if p.requires_grad]
     def forward(self, x):
         return self.model(x)
 
@@ -52,8 +66,8 @@ class Resnet50Classifier(pl.LightningModule):
 
     def configure_optimizers(self):
         optimizer = torch.optim.SGD(
-            self.model.fc.parameters(),
-            learning_rate=self.hparams.learning_rate,
+            self.trainable_params,
+            lr=self.hparams.learning_rate,
             momentum=0.9,
             weight_decay=self.hparams.weight_decay
         )

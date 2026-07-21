@@ -90,7 +90,6 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
         return inference_loader
    
     else: 
-        cifar_100_path=os.path.join(cifar_100_path,"cifar_100_path")
         if os.path.exists(cifar_100_path):
             download_flag=False  
         else:

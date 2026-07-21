@@ -17,7 +17,7 @@ BATCH_SIZE = 32
 SPLIT_SIZE = 0.8
 SEED = 42
 
-ROOT = "./root"
+ROOT = "/home/zarni/Resnet50/Fine-tuning-Resnet50/data/root"
 WEIGHT_PATH = "./models"
 
 # Flags
