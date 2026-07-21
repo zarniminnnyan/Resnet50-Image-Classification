@@ -196,13 +196,20 @@ def resnet50_with_best_params():
     trainer = get_trainer(best_params["num_epochs"])
     trainer.fit(model, train_loader, val_loader)
     
-    trained_model = model.model
+    # Load the best model from checkpoint
+    best_model_path = trainer.checkpoint_callback.best_model_path
+    print(f"Loading best model from: {best_model_path}")
+    best_model = Resnet50Classifier.load_from_checkpoint(best_model_path)
+    best_model.to(DEVICE)
+    best_model.eval()
+    
+    # Use the loaded best model for evaluation
     results = {
         "Best Trial Value": study.best_trial.value,
         "Best Params": best_params,
-        "Model Size (MB)": round(get_model_size(trained_model), 2),
-        "Inference Time (ms)": round(measure_inference_time(trained_model, DEVICE), 2),
-        "Accuracy (%)": round(trainer.callback_metrics["val_acc"].item(), 2)
+        "Model Size (MB)": round(get_model_size(best_model.model), 2),
+        "Inference Time (ms)": round(measure_inference_time(best_model.model, DEVICE), 2),
+        "Validation Accuracy (%)": round(trainer.callback_metrics["val_acc"].item(), 2)
     }
 
     save_results(results, filename="optuna_finetuned_results.json")

@@ -5,7 +5,7 @@ __pycache__/
 *.py[cod]
 *.pyo
 *.pyd
-./Fine-tuning-Resnet50/root
+/root
 # Virtual environments
 venv/
 .env/

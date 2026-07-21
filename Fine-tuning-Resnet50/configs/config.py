@@ -17,9 +17,8 @@ BATCH_SIZE = 32
 SPLIT_SIZE = 0.8
 SEED = 42
 
-ROOT = "/home/zarni/Resnet50/Fine-tuning-Resnet50/data/root"
+ROOT = "/content/drive/MyDrive/dataset/cifar-100-python"
 WEIGHT_PATH = "./models"
-
 # Flags
 INFERENCE = False
 LR=1e-4  
