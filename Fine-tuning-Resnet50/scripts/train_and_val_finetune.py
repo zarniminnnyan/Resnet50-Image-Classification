@@ -105,10 +105,13 @@ def get_trainer(max_epochs, callbacks=None):
 
 def get_callbacks(trial=None):
     """Helper to create callbacks."""
+    
+    os.makedirs(MODEL_CHECKPOINT_PATH, exist_ok=True)
     callbacks = [
         EarlyStopping(monitor='val_acc', patience=5, mode='max'),
         ModelCheckpoint(
             monitor="val_acc",
+            dirpath=MODEL_CHECKPOINT_PATH,
             mode="max",
             save_top_k=1,
             filename="finetuned-resnet50"
@@ -208,8 +211,14 @@ def resnet50_with_best_params():
     best_model_path = trainer.checkpoint_callback.best_model_path
     print(f"Loading best model from: {best_model_path}")
     best_model = Resnet50Classifier.load_from_checkpoint(best_model_path)
+    
     best_model.to(DEVICE)
     best_model.eval()
+     #save just the weights for inference
+    torch.save(
+        best_model.model.state_dict(),
+        os.path.join(MODEL_CHECKPOINT_PATH, "finetuned-resnet50-weights.pth")
+    )
     
     # Use the loaded best model for evaluation
     results = {
