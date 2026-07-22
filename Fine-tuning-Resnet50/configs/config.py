@@ -26,13 +26,13 @@ MODEL_CHECKPOINT_PATH="/content/drive/MyDrive/checkpoints"
 
 # Flags
 INFERENCE = False
-LR=1e-4  
+LR=1e-4
 NUM_EPOCHS=20
+
+OPTUNA_EPOCHS = 10
 
 # Hyperparameter search ranges for Optuna
 CONFIGS = {
-    "lr_configs": {"low": 1e-4, "high": 1e-2},
-    "weight_configs": {"low": 1e-5, "high": 1e-3},
-    "num_epochs_configs": {"low": 10, "high": 20},
-    "batch_configs": {"low": 64, "high": 128}
+    "lr_configs": {"low": 1e-4, "high": 1e-3},
+    "weight_configs": {"low": 1e-5, "high": 1e-3}
 }

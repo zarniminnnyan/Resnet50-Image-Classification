@@ -12,9 +12,8 @@ def build_transforms():
     """
 
     train_transform = transforms.Compose([
-        transforms.RandomResizedCrop(224),
+        transforms.Resize((128,128)),
         transforms.RandomHorizontalFlip(p=0.5),
-        transforms.RandomRotation(15),
         transforms.ColorJitter(
             brightness=0.2,
             contrast=0.2,
@@ -28,8 +27,7 @@ def build_transforms():
     ])
 
     val_transform = transforms.Compose([
-        transforms.Resize(256),
-        transforms.CenterCrop(224),
+        transforms.Resize((128,128)),
         transforms.ToTensor(),
         transforms.Normalize(
             mean=[0.485, 0.456, 0.406],
@@ -83,7 +81,8 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             inference_datasets,
             batch_size=batch_size,
             shuffle=False,
-            num_workers=2,
+            num_workers=4,
+            prefetch_factor=4,
             persistent_workers=True,
             pin_memory=True
         )
@@ -121,7 +120,8 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             train_dataset,
             batch_size=batch_size,
             shuffle=True,
-            num_workers=2,
+            num_workers=4,
+            prefetch_factor=4,
             persistent_workers=True,
             pin_memory=True  
         )
@@ -130,7 +130,8 @@ def load_tv_dataset(cifar_100_path: str, batch_size: int, finetuned_model_infere
             val_dataset,
             batch_size=batch_size,
             shuffle=False,
-            num_workers=2,
+            num_workers=4,
+            prefetch_factor=4,
             persistent_workers=True,
             pin_memory=True 
         ) 
