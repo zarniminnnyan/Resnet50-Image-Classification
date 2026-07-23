@@ -28,7 +28,7 @@ STORAGE_PATH= "sqlite:////kaggle/working/optuna_study.db"
 # Flags
 INFERENCE = False
 LR=1e-4
-NUM_EPOCHS=20 
+NUM_EPOCHS=200
 
 OPTUNA_EPOCHS = 10
 
