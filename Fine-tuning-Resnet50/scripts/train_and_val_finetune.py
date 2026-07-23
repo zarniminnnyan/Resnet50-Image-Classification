@@ -28,7 +28,8 @@ from configs import (
     CONFIGS,
     LIGHTNING_LOGS_PATH,
     MODEL_CHECKPOINT_PATH, 
-    OPTUNA_EPOCHS
+    OPTUNA_EPOCHS,
+    STORAGE_PATH
 )
 
 
@@ -163,7 +164,7 @@ class Resnet50Classifier(pl.LightningModule):
 def get_trainer(max_epochs, callbacks=None):
     """Helper to create trainer with consistent config."""
 
-    bar = TQDMProgressBar(refresh_rate=1)
+    bar = TQDMProgressBar(refresh_rate=0)
 
     callback_list = callbacks or []
 
@@ -256,9 +257,12 @@ def objective(trial):
 
 def run_optimization(n_trials=5):
     """Run hyperparameter optimization."""
-
+    
     study = optuna.create_study(
         direction="maximize",
+        storage=STORAGE_PATH,
+        study_name="resnet_optimization",
+        load_if_exists=True,
         pruner=optuna.pruners.MedianPruner(
             n_startup_trials=2,
             n_warmup_steps=1,

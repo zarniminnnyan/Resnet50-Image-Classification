@@ -18,10 +18,12 @@ SPLIT_SIZE = 0.8
 SEED = 42
 
 # Kaggle paths
-ROOT = "/kaggle/input/cifar-100-python"       
+ROOT = "/kaggle/working/cifar-100-python"       
 WEIGHT_PATH = "/kaggle/working/models"       
-LIGHTNING_LOGS_PATH = "/kaggle/working/logs
+LIGHTNING_LOGS_PATH = "/kaggle/working/logs"
 MODEL_CHECKPOINT_PATH = "/kaggle/working/checkpoints"
+BEST_CHECKPOINT_PATH="/kaggle/working/checkpoints/finetuned-resnet50-v5.ckpt"
+STORAGE_PATH= "sqlite:////kaggle/working/optuna_study.db"
 
 # Flags
 INFERENCE = False

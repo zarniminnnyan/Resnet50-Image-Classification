@@ -12,4 +12,5 @@ from .config import (
     SEED,
     SPLIT_SIZE,
     WEIGHT_PATH,
+    BEST_CHECKPOINT_PATH
 )
